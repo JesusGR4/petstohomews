@@ -5,7 +5,7 @@ namespace App;
 use App\Providers\CodesServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 
-class Particular extends Model {
+class Particular extends Model  {
 
 	protected $table = 'particulars';
 	public $timestamps = true;

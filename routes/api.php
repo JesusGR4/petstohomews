@@ -25,8 +25,8 @@ Route::post('/forgotPassword', 'ForgotPasswordController@sendResetEmail');
 Route::post('/reset', 'ResetPasswordController@reset');
 Route::post('/register', 'ParticularController@register');
 Route::post('/getSheltersByProvince', 'ShelterController@getSheltersByProvince');
-
-
+Route::post('/getSheltersByProvincePaginate', 'ShelterController@getSheltersByProvincePaginate');
+Route::post('/getShelterById', 'ShelterController@getShelterById');
 //Rutas para los tipos
 //
 //Route::group(['prefix' => 'types', 'middleware' => ['jwt.auth']], function () {
