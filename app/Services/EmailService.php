@@ -25,6 +25,6 @@ class EmailService extends Mailable
 
     public function build(){
 
-        return $this->view('emails.forgotPassword')->with(['token' => $this->token]);
+        return $this->subject('Restaurar contraseña')->view('emails.forgotPassword')->with(['token' => $this->token]);
     }
 }

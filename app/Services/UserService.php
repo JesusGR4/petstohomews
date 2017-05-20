@@ -31,7 +31,7 @@ class UserService implements UserRepository
 
     public function getUserByEmail($email)
     {
-        return User::where('email', '=', $email)->first();
+        return User::where('email', '=', $email)->select()->first();
     }
 
     /**

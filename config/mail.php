@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'pruebabateriasensevilla@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Baterias en Sevilla'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info.petstohome@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Pets2Home'),
     ],
 
     /*
