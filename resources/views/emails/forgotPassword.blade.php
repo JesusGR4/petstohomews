@@ -11,7 +11,7 @@
                         enlace:</p>
 
                     <p style="text-align: center;"><a
-                                href="http://localhost:4200/restart-password/{{$token}}">http://localhost:3003/#/restart-password/{{$token}}</a>
+                                href="http://localhost:4200/restart-password/{{$token}}">http://localhost:4200/restart-password/{{$token}}</a>
                     </p>
 
                     <p style="font-size: 12px;">Si el link no funciona, copia y pega la dirección completa en el

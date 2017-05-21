@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Usuario
- * Date: 06/04/2017
- * Time: 18:01
- */
+
 
 namespace App\Services;
 
@@ -45,8 +40,8 @@ class PasswordService extends UserService  implements PasswordRepository
     }
 
     private static function createToken($user){
-        $token = hash_hmac('sha256', Str::random(40), '8100ND3');
-        DB::statement('update password_resets set token = ? where email = ?',[$token,$user->email]);
+        $token = hash_hmac('sha256', Str::random(40), 'p3ts2h0m3');
+        DB::table('password_resets')->insertGetId(['token' => $token, 'email' => $user->email]);
         return $token;
     }
 
