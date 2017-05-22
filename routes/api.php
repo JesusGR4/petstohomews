@@ -21,6 +21,7 @@ Route::get('/home', function (Request $request) {
 
 //Rutas para el usuario
 Route::post('/login', 'Auth\LoginController@login');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/forgotPassword', 'ForgotPasswordController@sendResetEmail');
 Route::post('/reset', 'ResetPasswordController@reset');
 Route::post('/register', 'ParticularController@register');
