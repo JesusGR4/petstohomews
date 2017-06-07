@@ -15,8 +15,8 @@ class CreateSheltersTable extends Migration {
 			$table->string('address');
 			$table->string('description');
 			$table->string('schedule');
-			$table->date('end_date')->nullable();
 			$table->integer('user_id')->unsigned();
+            $table->boolean('status');
 		});
 	}
 
