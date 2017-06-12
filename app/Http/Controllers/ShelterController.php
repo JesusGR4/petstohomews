@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Usuario
- * Date: 21/04/2017
- * Time: 0:35
- */
+
 
 namespace App\Http\Controllers;
 
 
 use App\Exceptions\Pets2HomeException;
-use App\Exceptions\PetsToHomeException;
+use App\Http\Requests\Shelter\CreateShelterRequest;
 use App\Providers\CodesServiceProvider;
 use App\Shelter;
 use Illuminate\Http\Request;
@@ -44,6 +39,16 @@ class ShelterController extends Controller
     public function getShelterById(Request $request){
         try{
             return Shelter::getShelterById($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
+
+    public function createShelter(CreateShelterRequest $request){
+        try{
+
+            dd($request->all());
         }catch(Pets2HomeException $e){
             return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
                 'message' => $e->getMessage());

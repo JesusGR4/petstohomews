@@ -28,6 +28,7 @@ Route::post('/register', 'ParticularController@register');
 Route::post('/getSheltersByProvince', 'ShelterController@getSheltersByProvince');
 Route::post('/getSheltersByProvincePaginate', 'ShelterController@getSheltersByProvincePaginate');
 Route::post('/getShelterById', 'ShelterController@getShelterById');
+Route::post('/createShelter', 'ShelterController@createShelter');
 //Rutas para los tipos
 //
 //Route::group(['prefix' => 'types', 'middleware' => ['jwt.auth']], function () {
