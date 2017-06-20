@@ -29,16 +29,16 @@ class CreateShelterRequest extends FormRequest
     {
 
         return [
-//            "name"	            =>	    "required",
-//            "shelter.phone"	            =>	    "required",
-//            "shelter.email"	            =>	    "required|email|unique:users",
-//            "shelter.province"	            =>	    "required",
-//            "shelter.city"	            =>	    "required",
-//            "shelter.longitude"	            =>	    "required",
-//            "shelter.latitude"	            =>	    "required",
-//            "shelter.address"	            =>	    "required",
-//            "shelter.description"	            =>	    "required",
-//            "shelter.schedule"	            =>	    "required",
+            "name"	            =>	    "required",
+            "phone"	            =>	    "required",
+            "email"	            =>	    "required|email|unique:users",
+            "province"	            =>	    "required",
+            "city"	            =>	    "required",
+            "longitude"	            =>	    "required",
+            "latitude"	            =>	    "required",
+            "address"	            =>	    "required",
+            "description"	            =>	    "required",
+            "schedule"	            =>	    "required",
         ];
     }
 

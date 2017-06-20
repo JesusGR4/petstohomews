@@ -85,6 +85,8 @@ return [
     'unique'               => 'El :attribute ya ha sido cogido.',
     'uploaded'             => 'El :attribute fallo al subir.',
     'url'                  => 'El :attribute formato es inválido.',
+    'extension'            => 'El formato de la imagen debe ser.jpg o .png',
+    'ordersuccess'         => 'Su solicitud está siendo gestionada por el administrador',
 
     /*
     |--------------------------------------------------------------------------

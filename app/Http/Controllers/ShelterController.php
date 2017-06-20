@@ -35,7 +35,14 @@ class ShelterController extends Controller
                 'message' => $e->getMessage());
         }
     }
-
+    public function getPendingShelters(Request $request){
+        try{
+            return Shelter::getPendingShelters($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
     public function getShelterById(Request $request){
         try{
             return Shelter::getShelterById($request);
@@ -47,8 +54,7 @@ class ShelterController extends Controller
 
     public function createShelter(CreateShelterRequest $request){
         try{
-
-            dd($request->all());
+            return Shelter::createShelter($request);
         }catch(Pets2HomeException $e){
             return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
                 'message' => $e->getMessage());

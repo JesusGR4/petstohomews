@@ -85,6 +85,8 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'extension'            => 'Image format must be .jpg or .png',
+    'ordersuccess'         => 'Your request is being managed by the administrator',
 
     /*
     |--------------------------------------------------------------------------
