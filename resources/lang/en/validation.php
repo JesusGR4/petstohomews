@@ -87,7 +87,8 @@ return [
     'url'                  => 'The :attribute format is invalid.',
     'extension'            => 'Image format must be .jpg or .png',
     'ordersuccess'         => 'Your request is being managed by the administrator',
-
+    'not-found'            => 'We can not find what you are looking for!',
+    'invalid-login'        => 'Invalid credentials',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

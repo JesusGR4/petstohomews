@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Exceptions\BateriasSevillaException;
+use App\Exceptions\Pets2HomeException;
 use App\Http\Requests\Users\ResetPasswordFormRequest;
 use App\Providers\CodesServiceProvider;
 use App\Repositories\PasswordRepository;
@@ -26,7 +27,7 @@ class ResetPasswordController extends Controller
 
             return $this->password->resetPassword($request);
 
-        }catch (BateriasSevillaException $e){
+        }catch (Pets2HomeException $e){
             return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
                 'message' => $e->getMessage());
         }

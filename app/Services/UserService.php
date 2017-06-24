@@ -45,16 +45,18 @@ class UserService implements UserRepository
             return array(
                 'error' => true,
                 'code' => CodesServiceProvider::INVALID_TOKEN,
-                'message' => 'invalid_credentials'
+                'message' => trans('validation.invalid-login')
+            );
+        }else{
+            $user = self::getUserByEmail($request->input('email'));
+            return array(
+                'error' => false,
+                'code' => CodesServiceProvider::OK_CODE,
+                'token' => compact('token'),
+                'data' => $user
             );
         }
-        $user = self::getUserByEmail($request->input('email'));
-        return array(
-            'error' => false,
-            'code' => CodesServiceProvider::OK_CODE,
-            'token' => compact('token'),
-            'data' => $user
-        );
+
     }
 
     public function getUserByEmailAndToken($email, $token){
