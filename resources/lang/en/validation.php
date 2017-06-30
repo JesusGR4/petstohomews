@@ -89,6 +89,11 @@ return [
     'ordersuccess'         => 'Your request is being managed by the administrator',
     'not-found'            => 'We can not find what you are looking for!',
     'invalid-login'        => 'Invalid credentials',
+    'invalid-email'        => 'Invalid email',
+    'recover'              => 'Recover password',
+    'first'                => 'You have received this email because you have requested the access password change of your Pets2Home user. If you want to change the password, please click on the following link:',
+    'second'               => 'If the link does not work, copy and paste the complete address into the browser.',
+    'third'                => 'If you have not requested to change your password ignore this email.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

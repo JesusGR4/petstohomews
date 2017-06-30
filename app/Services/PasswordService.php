@@ -19,24 +19,24 @@ class PasswordService extends UserService  implements PasswordRepository
         $user = self::getUserByEmail($credentials);
 
         if(is_null($user)){
-            return array('error'=>true, 'code' => CodesServiceProvider::INVALID_EMAIL, 'message' => 'Correo incorrecto');
+            return array('error'=>true, 'code' => CodesServiceProvider::INVALID_EMAIL, 'message' => trans('validation.invalid-email'));
         }
 
         $token = self::createToken($user);
         self::toEmail($token, $user->email);
-        return array('error'=>false, 'code' => CodesServiceProvider::OK_CODE, 'message' => 'Correo enviado');
+        return array('error'=>false, 'code' => CodesServiceProvider::OK_CODE);
     }
 
     public function resetPassword($request){
         $row = self::getUserByEmailAndToken($request->input('email'), $request->input('token'));
         if(is_null($row)){
-            return array('error'=>true, 'code' => CodesServiceProvider::INVALID_EMAIL, 'message' => 'Correo incorrecto');
+            return array('error'=>true, 'code' => CodesServiceProvider::INVALID_EMAIL, 'message' => trans('validation.invalid-email'));
         }
         $user = self::getUserByEmail($request->input('email'));
         $user->password = bcrypt($request->input('password'));
         $user->remember_token = Str::random(60);
         $user->save();
-        return array('error'=>false, 'code' => CodesServiceProvider::OK_CODE, 'message' => 'Contraseña cambiada');
+        return array('error'=>false, 'code' => CodesServiceProvider::OK_CODE);
     }
 
     private static function createToken($user){

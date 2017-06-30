@@ -21,6 +21,7 @@ class Shelter extends Model  {
 	}
 
 	private static function checkProvince($province){
+
         $provincesArray = array("Álava","Ceuta", "Melilla", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Girona", "Granada", "Guadalajara", "Guipúzcoa", "Huelva", "Huesca", "Islas Baleares", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lleida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza");
         return in_array($province, $provincesArray);
 	}
@@ -28,7 +29,7 @@ class Shelter extends Model  {
         return is_null($attribute);
     }
     public static function getShelterByProvince(Request $request){
-        if(self::checkProvince($request->input('province'))){
+        if(!self::checkProvince($request->input('province'))){
             return array(
                 'error' => true,
                 'code' => 404,
@@ -55,7 +56,7 @@ class Shelter extends Model  {
                 'code' => 404,
                 'message' => trans('validation.not-found')
             );
-        }elseif(self::checkProvince($request->input('province'))){
+        }elseif(!self::checkProvince($request->input('province'))){
             return array(
                 'error' => true,
                 'code' => 404,
@@ -179,6 +180,12 @@ class Shelter extends Model  {
     }
 
     public static function getPendingShelters($request){
-
+        $shelters = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.status','=', 1)
+            ->select('users.name as user_name','users.created_at as created','users.phone as user_phone','users.email as user_email','users.city as user_city','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule')->get();
+        return array(
+            'error' => false,
+            'code' => CodesServiceProvider::OK_CODE,
+            'shelters' => $shelters
+        );
     }
 }

@@ -89,6 +89,10 @@ return [
     'ordersuccess'         => 'Su solicitud está siendo gestionada por el administrador',
     'not-found'            => '¡No podemos encontrar lo que estás buscando!',
     'invalid-login'        => 'Credenciales incorrectas',
+    'invalid-email'        => 'Email inválido',
+    'first'                => 'Has recibido este e-mail porque se ha solicitado el cambio de contraseña de acceso de tu usuario de Pets2Home. Si quieres cambiar la contraseña, por favor pulsa en el siguiente enlace:',
+    'second'               => 'Si el link no funciona, copia y pega la dirección completa en el navegador.',
+    'third'                => 'Si no has solicitado cambiar tu contraseña ignora este e-mail.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
