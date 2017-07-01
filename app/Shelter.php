@@ -99,7 +99,7 @@ class Shelter extends Model  {
             );
         }
         $shelter = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.id','=', $shelter_id)
-            ->select('users.name as user_name','users.phone as user_phone','users.email as user_email','users.city as user_city','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule')->first();
+            ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id')->first();
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
@@ -180,11 +180,13 @@ class Shelter extends Model  {
     }
 
     public static function getPendingShelters($request){
+
         $shelters = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.status','=', 1)
-            ->select('users.name as user_name','users.created_at as created','users.phone as user_phone','users.email as user_email','users.city as user_city','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule')->get();
+            ->select('users.id as user_id','shelters.id as shelter_id','users.name as user_name','users.created_at as created','users.phone as user_phone','users.email as user_email','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','users.province as shelter_province','users.city as shelter_city')->skip(($request->input('currentPage')-1)*PaginationServiceProvider::limit)->take(PaginationServiceProvider::limit)->get();
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
+            'totalItems' => count($shelters),
             'shelters' => $shelters
         );
     }

@@ -32,7 +32,7 @@ Route::post('/createShelter', 'ShelterController@createShelter');
 
 //ADMIN ROUTES
 Route::group(['prefix' => 'admin', 'middleware' => ['jwt.auth', 'admin']], function () {
-    Route::get('/getPendingShelters', 'ShelterController@getPendingShelters');
+    Route::post('/getPendingShelters', 'ShelterController@getPendingShelters');
 });
 
 //Rutas para los tipos
