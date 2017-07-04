@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Usuario
- * Date: 21/04/2017
- * Time: 0:35
- */
+
 
 namespace App\Http\Controllers;
 
 
 use App\Exceptions\Pets2HomeException;
-use App\Exceptions\PetsToHomeException;
+use App\Http\Requests\Shelter\CreateShelterRequest;
 use App\Providers\CodesServiceProvider;
 use App\Shelter;
 use Illuminate\Http\Request;
@@ -40,7 +35,14 @@ class ShelterController extends Controller
                 'message' => $e->getMessage());
         }
     }
-
+    public function getPendingShelters(Request $request){
+        try{
+            return Shelter::getPendingShelters($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
     public function getShelterById(Request $request){
         try{
             return Shelter::getShelterById($request);
@@ -49,4 +51,32 @@ class ShelterController extends Controller
                 'message' => $e->getMessage());
         }
     }
+
+    public function createShelter(CreateShelterRequest $request){
+        try{
+            return Shelter::createShelter($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
+
+    public function rejectShelter(Request $request){
+        try{
+            return Shelter::rejectShelter($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
+    public function acceptShelter(Request $request){
+        try{
+            return Shelter::acceptShelter($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
+
+
 }

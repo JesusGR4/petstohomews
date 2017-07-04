@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Exceptions\BateriasSevillaException;
+use App\Exceptions\Pets2HomeException;
 use App\Http\Requests\Users\PasswordRecoveryFormRequest;
 use App\Providers\CodesServiceProvider;
 use App\Repositories\PasswordRepository;
@@ -31,7 +32,7 @@ class ForgotPasswordController extends Controller
 
             return $this->password->sendLink($request->only('email'));
 
-        }catch (BateriasSevillaException $e){
+        }catch (Pets2HomeException $e){
             return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
                 'message' => $e->getMessage());
         }

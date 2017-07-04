@@ -32,7 +32,12 @@ class LoginRequest  extends FormRequest
 
     protected function formatErrors(Validator $validator)
     {
+        $messages = array();
+        foreach($validator->errors()->all() as $error){
+            array_push($messages, trans($error));
+        }
+
         return array('error' => true, 'code' => CodesServiceProvider::FAILED_VALIDATOR_CODE,
-            'message' => $validator->errors()->all());
+            'message' => $messages);
     }
 }

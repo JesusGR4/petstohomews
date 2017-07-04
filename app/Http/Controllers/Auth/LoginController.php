@@ -7,6 +7,7 @@ use App\Profile;
 use App\Providers\CodesServiceProvider;
 use App\Repositories\UserRepository;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Facades\JWTAuth;

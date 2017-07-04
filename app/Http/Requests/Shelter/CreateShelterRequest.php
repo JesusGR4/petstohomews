@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests\Shelter;
 
 use App\Providers\CodesServiceProvider;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class PasswordRecoveryFormRequest extends FormRequest
+
+class CreateShelterRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,14 +27,25 @@ class PasswordRecoveryFormRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            "email"	=>		"required|email|max:50",
+            "name"	            =>	    "required",
+            "phone"	            =>	    "required",
+            "email"	            =>	    "required|email|unique:users",
+            "province"	            =>	    "required",
+            "city"	            =>	    "required",
+            "longitude"	            =>	    "required",
+            "latitude"	            =>	    "required",
+            "address"	            =>	    "required",
+            "description"	            =>	    "required",
+            "schedule"	            =>	    "required",
         ];
     }
 
 
     protected function formatErrors(Validator $validator)
     {
+
         $messages = array();
         foreach($validator->errors()->all() as $error){
             array_push($messages, trans($error));

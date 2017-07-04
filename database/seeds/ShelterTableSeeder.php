@@ -10,14 +10,15 @@ class ShelterTableSeeder extends Seeder {
 		//DB::table('shelter')->delete();
 //        DB::table('shelter')->truncate();
 		// UserShelter
-		for($i=13;$i<=562;$i++){
+		for($i=13;$i<=584;$i++){
             Shelter::create(array(
-                'altitude' => $i,
+                'longitude' => $i,
                 'latitude' => $i,
                 'address' => 'Calle Huertas,'.$i,
                 'description' => 'Descripción'.$i,
                 'schedule' => 'Lunes a Viernes de 10:00 a 14:00',
-                'user_id' => $i
+                'user_id' => $i,
+                'status' => false
             ));
         }
 	}

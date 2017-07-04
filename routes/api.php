@@ -28,6 +28,15 @@ Route::post('/register', 'ParticularController@register');
 Route::post('/getSheltersByProvince', 'ShelterController@getSheltersByProvince');
 Route::post('/getSheltersByProvincePaginate', 'ShelterController@getSheltersByProvincePaginate');
 Route::post('/getShelterById', 'ShelterController@getShelterById');
+Route::post('/createShelter', 'ShelterController@createShelter');
+
+//ADMIN ROUTES
+Route::group(['prefix' => 'admin', 'middleware' => ['jwt.auth', 'admin']], function () {
+    Route::post('/getPendingShelters', 'ShelterController@getPendingShelters');
+    Route::post('/rejectShelter', 'ShelterController@rejectShelter');
+    Route::post('/acceptShelter', 'ShelterController@acceptShelter');
+});
+
 //Rutas para los tipos
 //
 //Route::group(['prefix' => 'types', 'middleware' => ['jwt.auth']], function () {

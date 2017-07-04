@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration {
 			$table->integer('role_id')->unsigned();
 			$table->string('city');
 			$table->rememberToken('rememberToken');
-			$table->string('password');
+			$table->string('password')->nullable();
 		});
         Schema::create('password_resets',function(Blueprint $table){
             $table->increments('id');
