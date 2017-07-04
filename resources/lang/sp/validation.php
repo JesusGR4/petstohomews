@@ -93,6 +93,10 @@ return [
     'first'                => 'Has recibido este e-mail porque se ha solicitado el cambio de contraseña de acceso de tu usuario de Pets2Home. Si quieres cambiar la contraseña, por favor pulsa en el siguiente enlace:',
     'second'               => 'Si el link no funciona, copia y pega la dirección completa en el navegador.',
     'third'                => 'Si no has solicitado cambiar tu contraseña ignora este e-mail.',
+    'reject'               => 'Solicitud de casa de acogida rechaza',
+    'firstreject'          => 'Su solicitud ha sido rechazada por la siguiente razón:',
+    'accept'               => 'Su solicitud de ingreso ha sido aceptada',
+    'firstaccept'          => 'Su contraseña de acceso a la plataforma es la siguiente',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

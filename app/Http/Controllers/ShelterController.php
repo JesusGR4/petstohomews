@@ -61,5 +61,22 @@ class ShelterController extends Controller
         }
     }
 
+    public function rejectShelter(Request $request){
+        try{
+            return Shelter::rejectShelter($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
+    public function acceptShelter(Request $request){
+        try{
+            return Shelter::acceptShelter($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
+
 
 }

@@ -94,6 +94,10 @@ return [
     'first'                => 'You have received this email because you have requested the access password change of your Pets2Home user. If you want to change the password, please click on the following link:',
     'second'               => 'If the link does not work, copy and paste the complete address into the browser.',
     'third'                => 'If you have not requested to change your password ignore this email.',
+    'reject'               => 'Shelter request rejected',
+    'firstreject'          => 'Your shelter request has been rejected by the following reason:',
+    'accept'               => 'Your shelter request has been accepted',
+    'firstaccept'          => 'Your new password is the following one:',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

@@ -3,12 +3,15 @@
 namespace App;
 use App\Providers\CodesServiceProvider;
 use App\Providers\PaginationServiceProvider;
+use App\Services\AcceptEmailService;
+use App\Services\RejectEmailService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Image as Image_File;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Mail;
 class Shelter extends Model  {
 
 	protected $table = 'shelters';
@@ -99,7 +102,7 @@ class Shelter extends Model  {
             );
         }
         $shelter = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.id','=', $shelter_id)
-            ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id')->first();
+            ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id', 'users.city as user_city')->first();
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
@@ -189,5 +192,122 @@ class Shelter extends Model  {
             'totalItems' => count($shelters),
             'shelters' => $shelters
         );
+    }
+
+    public static function acceptShelter(Request $request){
+        $shelter_id = $request->input('shelter_id');
+        if(self::checkShelter($shelter_id)){
+            return array(
+                'error' => true,
+                'code' => 404,
+                'message' => trans('validation.not-found')
+            );
+        }elseif(self::checkNull($shelter_id)){
+            return array(
+                'error' => true,
+                'code' => 404,
+                'message' => trans('validation.not-found')
+            );
+        }elseif(self::checkId($shelter_id)){
+            return array(
+                'error' => true,
+                'code' => 404,
+                'message' => trans('validation.not-found')
+            );
+        }else{
+            $shelter = Shelter::find($shelter_id);
+            $user = User::find($shelter->user_id);
+            $randomPassword = self::randomPassword();
+            $user->password = bcrypt($randomPassword);
+            $shelter->status = 0;
+            $shelter->save();
+            $user->save();
+            self::acceptEmail($user->email, $randomPassword);
+            return array(
+                'error' => false,
+                'code' => CodesServiceProvider::OK_CODE,
+            );
+        }
+    }
+    private static function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+    public static function rejectShelter(Request $request){
+            $shelter_id = $request->input('shelter_id');
+            if(self::checkShelter($shelter_id)){
+                return array(
+                    'error' => true,
+                    'code' => 404,
+                    'message' => trans('validation.not-found')
+                );
+            }elseif(self::checkNull($shelter_id)){
+            return array(
+                'error' => true,
+                'code' => 404,
+                'message' => trans('validation.not-found')
+            );
+        }elseif(self::checkId($shelter_id)){
+            return array(
+                'error' => true,
+                'code' => 404,
+                'message' => trans('validation.not-found')
+            );
+        }else{
+                $shelter = Shelter::find($shelter_id);
+                $user = User::find($shelter->user_id);
+                self::deleteImagesFromShelter($user->id);
+                $shelter->delete();
+                $email = $user->email;
+
+                self::deleteUser($user->id);
+                self::rejectEmail($email, $request->input('reason'));
+                return array(
+                    'error' => false,
+                    'code' => CodesServiceProvider::OK_CODE,
+                );
+            }
+    }
+
+    private static function checkShelter($shelter_id){
+        $result = false;
+        $shelter = DB::table('shelters')->where('id','=', $shelter_id)->get();
+        if(count($shelter)==0){
+            $result = true;
+        }
+        return $result;
+    }
+
+    private static function deleteImagesFromShelter($user_id){
+        $images = DB::table('images')->where('user_id','=',$user_id)->get();
+        foreach($images as $image){
+            $img = Image_File::find($image->id);
+            $path =  'img/';
+            $realPath = $path.$img->name;
+            unlink($realPath);
+            $img->delete();
+        }
+
+    }
+
+    private static function deleteUser($user_id){
+
+        $user = User::find($user_id);
+        $user->delete();
+    }
+
+    private static function rejectEmail($email, $reason){
+
+        Mail::to($email)->send(new RejectEmailService($reason));
+}
+
+    private static function acceptEmail($email, $password){
+        Mail::to($email)->send(new AcceptEmailService($password));
     }
 }
