@@ -49,11 +49,19 @@ class UserService implements UserRepository
             );
         }else{
             $user = self::getUserByEmail($request->input('email'));
+            $image = self::getImageByUser($user->id);
+
+            if(is_null($image)){
+                $name = null;
+            }else{
+                $name = $image->name;
+            }
             return array(
                 'error' => false,
                 'code' => CodesServiceProvider::OK_CODE,
                 'token' => compact('token'),
-                'data' => $user
+                'data' => $user,
+                'image' => $name
             );
         }
 
@@ -62,5 +70,9 @@ class UserService implements UserRepository
     public function getUserByEmailAndToken($email, $token){
         return DB::table('password_resets')->where('token','=',$token)->where('email','=', $email)->first();
     }
+    public function getImageByUser($id){
+        return DB::table('images')->where('user_id','=',$id)->first();
+    }
+
 
 }

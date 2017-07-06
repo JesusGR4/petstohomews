@@ -28,7 +28,7 @@ class Particular extends Model  {
         $user->province = $request->input('province');
         $user->city = $request->input('city');
         $user->role_id = 2;
-        $user->password = $request->input('password');
+        $user->password = bcrypt($request->input('password'));
         $user->save();
         return $user;
     }
