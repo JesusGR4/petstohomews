@@ -103,10 +103,12 @@ class Shelter extends Model  {
         }
         $shelter = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.id','=', $shelter_id)
             ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id', 'users.city as user_city')->first();
+        $images = DB::table('images')->where('user_id','=', $shelter->user_id)->get();
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
-            'shelter' => $shelter
+            'shelter' => $shelter,
+            'images' => $images
         );
     }
 
