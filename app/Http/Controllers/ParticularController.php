@@ -13,7 +13,7 @@ use App\Exceptions\Pets2HomeException;
 use App\Http\Requests\RegisterFormRequest;
 use App\Particular;
 use App\Providers\CodesServiceProvider;
-
+use Illuminate\Http\Request;
 
 class ParticularController extends Controller
 {
@@ -26,6 +26,15 @@ class ParticularController extends Controller
 
         try{
             return Particular::register($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
+
+    public function getParticular(Request $request){
+        try{
+            return Particular::getParticular();
         }catch(Pets2HomeException $e){
             return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
                 'message' => $e->getMessage());

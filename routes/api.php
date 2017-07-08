@@ -37,6 +37,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['jwt.auth', 'admin']], funct
     Route::post('/acceptShelter', 'ShelterController@acceptShelter');
 });
 
+//ADMIN ROUTES
+Route::group(['prefix' => 'particular', 'middleware' => ['jwt.auth', 'particular']], function () {
+    Route::get('/getParticular', 'ParticularController@getParticular');
+
+});
 //Rutas para los tipos
 //
 //Route::group(['prefix' => 'types', 'middleware' => ['jwt.auth']], function () {
