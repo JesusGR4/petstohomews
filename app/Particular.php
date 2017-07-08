@@ -4,7 +4,10 @@ namespace App;
 
 use App\Providers\CodesServiceProvider;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Image as Image_File;
+use Intervention\Image\ImageManagerStatic as Image;
 class Particular extends Model  {
 
 	protected $table = 'particulars';
@@ -28,7 +31,7 @@ class Particular extends Model  {
         $user->province = $request->input('province');
         $user->city = $request->input('city');
         $user->role_id = 2;
-        $user->password = $request->input('password');
+        $user->password = bcrypt($request->input('password'));
         $user->save();
         return $user;
     }
@@ -37,5 +40,12 @@ class Particular extends Model  {
         $particular->surname = $request->input('surname');
         $particular->user_id = $userId;
         $particular->save();
+    }
+
+    public static function getParticular(){
+        $user = Auth::user();
+        $particular = DB::table('particularS')->where('user_id','=', $user->id)->first();
+        $image = DB::table('images')->where('user_id','=', $user->id)->first();
+        return array('error'=>false, 'code' => CodesServiceProvider::OK_CODE, 'user'=> $user, 'particular' => $particular, 'image' => $image);
     }
 }
