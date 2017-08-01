@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['jwt.auth', 'admin']], funct
 //ADMIN ROUTES
 Route::group(['prefix' => 'particular', 'middleware' => ['jwt.auth', 'particular']], function () {
     Route::get('/getParticular', 'ParticularController@getParticular');
+    Route::post('/editProfile', 'ParticularController@updateProfile');
 
 });
 //Rutas para los tipos

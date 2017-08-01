@@ -40,4 +40,13 @@ class ParticularController extends Controller
                 'message' => $e->getMessage());
         }
     }
+
+    public function updateProfile(Request $request){
+        try{
+            return Particular::updateParticular($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
 }
