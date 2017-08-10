@@ -3,20 +3,20 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateImagesTable extends Migration {
+class CreateDogsTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('images', function(Blueprint $table) {
+		Schema::create('dogs', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			$table->string('name');
-			$table->integer('user_id')->unsigned()->nullable();
+			$table->string('size');
+			$table->integer('animal_id')->unsigned();
 		});
 	}
 
 	public function down()
 	{
-		Schema::drop('images');
+		Schema::drop('dogs');
 	}
 }

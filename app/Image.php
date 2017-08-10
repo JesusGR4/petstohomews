@@ -14,4 +14,9 @@ class Image extends Model {
 		return $this->belongsTo('User', 'user_id');
 	}
 
+    public function belongsToAnimal()
+    {
+        return $this->belongsTo('Animal', 'animal_id');
+    }
+
 }
