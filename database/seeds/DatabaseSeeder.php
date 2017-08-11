@@ -36,5 +36,14 @@ class DatabaseSeeder extends Seeder {
         $this->call('ImageTableSeeder');
         $this->command->info('image table seeded!');
 
+        $this->call('AnimalTableSeeder');
+        $this->command->info('Animalable seeded!');
+
+        $this->call('CatTableSeeder');
+        $this->command->info('Cat table seeded!');
+
+        $this->call('DogTableSeeder');
+        $this->command->info('Dog table seeded!');
+
 	}
 }
