@@ -12,6 +12,7 @@ use App\Image as Image_File;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Mail;
+
 class Shelter extends Model  {
 
 	protected $table = 'shelters';
@@ -22,6 +23,10 @@ class Shelter extends Model  {
 	{
 		return $this->belongsTo('User', 'user_id');
 	}
+
+	public function hasManyAnimals(){
+        return $this->hasMany('\App\Animal');
+    }
 
 	private static function checkProvince($province){
 
@@ -40,15 +45,16 @@ class Shelter extends Model  {
             );
         }
         $shelters = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('users.province','=', $request->input('province'))->select('users.*','shelters.description as description', 'shelters.id as shelter_id')->get();
-        $result= array();
+
         //TODO: Mostrar el número de animales por casa de acogida
-        /*foreach($shelters as $shelter){
-            $numberOfPets
-        }*/
+        foreach($shelters as $shelter){
+            $countAnimals[] = DB::table('animals')->where('shelter_id', '=', $shelter->id)->count();
+        }
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
-            'shelters' => $shelters
+            'shelters' => $shelters,
+            'counters' => $countAnimals
         );
     }
 

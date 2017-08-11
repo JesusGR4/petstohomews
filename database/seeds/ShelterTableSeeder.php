@@ -12,7 +12,7 @@ class ShelterTableSeeder extends Seeder {
 		// UserShelter
 		for($i=13;$i<=584;$i++){
             Shelter::create(array(
-                'longitude' => $i,
+                'altitude' => $i,
                 'latitude' => $i,
                 'address' => 'Calle Huertas,'.$i,
                 'description' => 'Descripción'.$i,

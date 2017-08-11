@@ -17,8 +17,9 @@ class CreateUsersTable extends Migration {
 			$table->integer('role_id')->unsigned();
 			$table->string('city');
 			$table->rememberToken('rememberToken');
-			$table->string('password')->nullable();
+			$table->string('password');
 		});
+
         Schema::create('password_resets',function(Blueprint $table){
             $table->increments('id');
             $table->string('email');
@@ -29,7 +30,7 @@ class CreateUsersTable extends Migration {
 
 	public function down()
 	{
-		Schema::drop('users');
+        Schema::drop('users');
         Schema::drop('password_resets');
-	}
+    }
 }
