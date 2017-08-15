@@ -16,6 +16,8 @@ class CreateAnimalsTable extends Migration {
 			$table->tinyInteger('age');
 			$table->string('medicalHistory');
 			$table->integer('shelter_id')->unsigned();
+            $table->integer('type');
+            $table->string('size')->nullable();
 		});
 	}
 

@@ -13,7 +13,9 @@ class AnimalTableSeeder extends Seeder
                 'breed' => 'Dangerous',
                 'age' => 10+$i,
                 'medicalHistory' => 'Good pet',
-                'shelter_id' => 100+$i
+                'shelter_id' => 100+$i,
+                'type' => ($i%2 ==0)?1:0,
+                'size' => ($i%2 ==0)?'big':null,
             ));
         }
 
