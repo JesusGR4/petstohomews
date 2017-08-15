@@ -43,16 +43,7 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('restrict');
 		});
-		Schema::table('dogs', function(Blueprint $table) {
-			$table->foreign('animal_id')->references('id')->on('animals')
-						->onDelete('restrict')
-						->onUpdate('restrict');
-		});
-		Schema::table('cats', function(Blueprint $table) {
-			$table->foreign('animal_id')->references('id')->on('animals')
-						->onDelete('restrict')
-						->onUpdate('restrict');
-		});
+
 	}
 
 	public function down()
@@ -78,11 +69,6 @@ class CreateForeignKeys extends Migration {
 		Schema::table('animals', function(Blueprint $table) {
 			$table->dropForeign('animals_shelter_id_foreign');
 		});
-		Schema::table('dogs', function(Blueprint $table) {
-			$table->dropForeign('dogs_animal_id_foreign');
-		});
-		Schema::table('cats', function(Blueprint $table) {
-			$table->dropForeign('cats_animal_id_foreign');
-		});
+
 	}
 }

@@ -22,15 +22,6 @@ class Animal extends Model
         return $this->hasMany('Image');
     }
 
-    public function hasManyDogs()
-    {
-        return $this->hasMany('Dog');
-    }
-
-    public function hasManyCats()
-    {
-        return $this->hasMany('Cat');
-    }
 
     public static function getAnimalsByShelterId($request){
         $animals = DB::table('animals')->where('shelter_id', '=', $request->input('shelter_id'))->get();
@@ -70,5 +61,17 @@ class Animal extends Model
         $animals = DB::table('animals')->where('shelter_id','=',$request['shelter_id'])->skip(($request['currentPage']-1)*PaginationServiceProvider::limit)->take(PaginationServiceProvider::limit)->get();
         return $animals;
 
+    }
+
+    public static function getAnimalById($request){
+        $animal = DB::table('animals')->where('id', '=', $request->input('animal_id'))->first();
+        $images = Array();
+        $images[] = DB::table('images')->where('animal_id', '=', $animal->id)->get();
+        return array(
+            'error' => false,
+            'code' => CodesServiceProvider::OK_CODE,
+            'animal' => $animal,
+            'images' => $images
+        );
     }
 }

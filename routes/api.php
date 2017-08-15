@@ -36,6 +36,7 @@ Route::post('/getShelterById', 'ShelterController@getShelterById');
 Route::post('/createShelter', 'ShelterController@createShelter');
 Route::post('/getAnimalsByShelterId', 'AnimalController@getAnimalsByShelterId');
 Route::post('/getAnimalsByShelter', 'AnimalController@getAnimalsByShelter');
+Route::post('/getAnimalById', 'AnimalController@getAnimalById');
 //ADMIN ROUTES
 Route::group(['prefix' => 'admin', 'middleware' => ['jwt.auth', 'admin']], function () {
     Route::post('/getPendingShelters', 'ShelterController@getPendingShelters');
