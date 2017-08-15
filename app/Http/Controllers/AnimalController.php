@@ -39,4 +39,13 @@ class AnimalController extends Controller
                 'message' => $e->getMessage());
         }
     }
+
+    public function getMyAnimals(Request $request){
+        try{
+            return Animal::getMyAnimals($request);
+        }catch(Pets2HomeException $e){
+            return array('error' => true, 'code' => CodesServiceProvider::SERVER_ERROR_CODE ,
+                'message' => $e->getMessage());
+        }
+    }
 }

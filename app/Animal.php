@@ -6,6 +6,7 @@ use App\Providers\PaginationServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Image as Image_File;
+use Illuminate\Support\Facades\Auth;
 class Animal extends Model 
 {
 
@@ -71,6 +72,22 @@ class Animal extends Model
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
             'animal' => $animal,
+            'images' => $images
+        );
+    }
+
+    public static function getMyAnimals($request){
+        $user = Auth::user();
+        $shelter = DB::table('shelters')->where('user_id','=', $user->id)->first();
+        $animals = DB::table('animals')->where('shelter_id','=',$shelter->id)->skip(($request['currentPage']-1)*PaginationServiceProvider::limit)->take(PaginationServiceProvider::limit)->get();
+        $images = array();
+        foreach($animals as $animal){
+            $images[] = DB::table('images')->where('animal_id', '=', $animal->id)->first();
+        }
+        return array(
+            'error' => false,
+            'code' => CodesServiceProvider::OK_CODE,
+            'animals' => $animals,
             'images' => $images
         );
     }

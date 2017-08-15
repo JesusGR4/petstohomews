@@ -44,10 +44,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['jwt.auth', 'admin']], funct
     Route::post('/acceptShelter', 'ShelterController@acceptShelter');
 });
 
-//ADMIN ROUTES
+//Particular ROUTES
 Route::group(['prefix' => 'particular', 'middleware' => ['jwt.auth', 'particular']], function () {
     Route::get('/getParticular', 'ParticularController@getParticular');
     Route::post('/editProfile', 'ParticularController@updateProfile');
+
+});
+
+//Particular ROUTES
+Route::group(['prefix' => 'shelter', 'middleware' => ['jwt.auth', 'shelter']], function () {
+    Route::post('/getMyAnimals', 'AnimalController@getMyAnimals');
+
 
 });
 //Rutas para los tipos
