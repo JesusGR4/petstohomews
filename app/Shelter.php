@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 
 class Shelter extends Model  {
 
+
 	protected $table = 'shelters';
 	public $timestamps = true;
 
@@ -46,10 +47,10 @@ class Shelter extends Model  {
         }
         $shelters = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('users.province','=', $request->input('province'))->select('users.*','shelters.description as description', 'shelters.id as shelter_id')->get();
 
-        //TODO: Mostrar el número de animales por casa de acogida
         foreach($shelters as $shelter){
-            $countAnimals[] = DB::table('animals')->where('shelter_id', '=', $shelter->id)->count();
+            $countAnimals[] = DB::table('animals')->where('shelter_id', '=', $shelter->shelter_id)->count();
         }
+
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
@@ -73,10 +74,18 @@ class Shelter extends Model  {
             );
         }
         $shelters = self::getSheltersList($request['province'], $request['currentPage']);
+
+        foreach($shelters as $shelter){
+            $countAnimals[] = DB::table('animals')->where('shelter_id', '=', $shelter->shelter_id)->count();
+            $images[] = DB::table('images')->where('user_id', '=', $shelter->shelter_id)->first();
+        }
+
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
-            'shelters' => $shelters
+            'shelters' => $shelters,
+            'images' => $images,
+            'counters' => $countAnimals
         );
     }
 
@@ -92,6 +101,7 @@ class Shelter extends Model  {
         }
         return $result;
     }
+
     public static function getShelterById(Request $request){
         $shelter_id = $request['shelter_id'];
         if(self::checkNull($shelter_id)){
@@ -108,7 +118,7 @@ class Shelter extends Model  {
             );
         }
         $shelter = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.id','=', $shelter_id)
-            ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id', 'users.city as user_city')->first();
+            ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.latitude as shelter_latitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id', 'users.city as user_city')->first();
         $images = DB::table('images')->where('user_id','=', $shelter->user_id)->get();
         return array(
             'error' => false,
@@ -117,7 +127,6 @@ class Shelter extends Model  {
             'images' => $images
         );
     }
-
 
     public static function createShelter(Request $request){
         if(self::checkImages($request)){
