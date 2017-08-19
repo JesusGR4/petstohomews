@@ -54,7 +54,8 @@ Route::group(['prefix' => 'particular', 'middleware' => ['jwt.auth', 'particular
 //Particular ROUTES
 Route::group(['prefix' => 'shelter', 'middleware' => ['jwt.auth', 'shelter']], function () {
     Route::post('/getMyAnimals', 'AnimalController@getMyAnimals');
-
+    Route::post('/createAnimal', 'AnimalController@createAnimal');
+    Route::post('/deleteAnimal', 'AnimalController@deleteAnimal');
 
 });
 //Rutas para los tipos
