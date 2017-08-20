@@ -118,7 +118,7 @@ class Shelter extends Model  {
             );
         }
         $shelter = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.id','=', $shelter_id)
-            ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.latitude as shelter_latitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id', 'users.city as user_city')->first();
+            ->select('users.name as user_name','users.id as user_id','users.phone as user_phone','users.email as user_email','shelters.altitude as shelter_altitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','shelters.id as shelter_id', 'users.city as user_city')->first();
         $images = DB::table('images')->where('user_id','=', $shelter->user_id)->get();
         return array(
             'error' => false,
@@ -154,7 +154,7 @@ class Shelter extends Model  {
     private static function setShelter($request, $userId){
         $shelter = new Shelter();
         $shelter->latitude = $request->input('latitude');
-        $shelter->longitude = $request->input('longitude');
+        $shelter->altitude = $request->input('altitude');
         $shelter->address = $request->input('address');
         $shelter->schedule = $request->input('schedule');
         $shelter->description = $request->input('description');
@@ -202,7 +202,7 @@ class Shelter extends Model  {
     public static function getPendingShelters($request){
 
         $shelters = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.status','=', 1)
-            ->select('users.id as user_id','shelters.id as shelter_id','users.name as user_name','users.created_at as created','users.phone as user_phone','users.email as user_email','shelters.longitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','users.province as shelter_province','users.city as shelter_city')->skip(($request->input('currentPage')-1)*PaginationServiceProvider::limit)->take(PaginationServiceProvider::limit)->get();
+            ->select('users.id as user_id','shelters.id as shelter_id','users.name as user_name','users.created_at as created','users.phone as user_phone','users.email as user_email','shelters.altitude as shelter_altitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','users.province as shelter_province','users.city as shelter_city')->skip(($request->input('currentPage')-1)*PaginationServiceProvider::limit)->take(PaginationServiceProvider::limit)->get();
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
