@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Image as Image_File;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 class Animal extends Model 
 {
 
@@ -154,7 +155,6 @@ class Animal extends Model
         }
         return $result;
     }
-
     public static function deleteAnimal($request){
         $animal = Animal::find($request->input('animal_id'));
         self::deleteImagesFromAnimal($animal->id);
@@ -164,7 +164,6 @@ class Animal extends Model
             'code' => CodesServiceProvider::OK_CODE,
         );
     }
-
     private static function deleteImagesFromAnimal($user_id){
         $images = DB::table('images')->where('animal_id','=',$user_id)->get();
         foreach($images as $image){
