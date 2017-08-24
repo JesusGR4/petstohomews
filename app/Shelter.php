@@ -46,16 +46,19 @@ class Shelter extends Model  {
             );
         }
         $shelters = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('users.province','=', $request->input('province'))->select('users.*','shelters.description as description', 'shelters.id as shelter_id')->get();
-
+        $countAnimals = array();
+        $images = array();
         foreach($shelters as $shelter){
             $countAnimals[] = DB::table('animals')->where('shelter_id', '=', $shelter->shelter_id)->count();
+            $images[] = DB::table('images')->where('user_id', '=', $shelter->id)->first();
         }
 
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
             'shelters' => $shelters,
-            'counters' => $countAnimals
+            'counters' => $countAnimals,
+            'images'   => $images
         );
     }
 
@@ -74,10 +77,12 @@ class Shelter extends Model  {
             );
         }
         $shelters = self::getSheltersList($request['province'], $request['currentPage']);
+        $countAnimals = array();
+        $images = array();
 
         foreach($shelters as $shelter){
             $countAnimals[] = DB::table('animals')->where('shelter_id', '=', $shelter->shelter_id)->count();
-            $images[] = DB::table('images')->where('user_id', '=', $shelter->shelter_id)->first();
+            $images[] = DB::table('images')->where('user_id', '=', $shelter->id)->first();
         }
 
         return array(
@@ -129,6 +134,7 @@ class Shelter extends Model  {
     }
 
     public static function createShelter(Request $request){
+
         if(self::checkImages($request)){
             return array('error' => true, 'code' => CodesServiceProvider::FAILED_VALIDATOR_CODE,
                 'message' => trans('validation.extension'));
@@ -154,7 +160,7 @@ class Shelter extends Model  {
     private static function setShelter($request, $userId){
         $shelter = new Shelter();
         $shelter->latitude = $request->input('latitude');
-        $shelter->altitude = $request->input('altitude');
+        $shelter->altitude = $request->input('longitude');
         $shelter->address = $request->input('address');
         $shelter->schedule = $request->input('schedule');
         $shelter->description = $request->input('description');
@@ -202,7 +208,7 @@ class Shelter extends Model  {
     public static function getPendingShelters($request){
 
         $shelters = DB::table('shelters')->join('users','users.id','=','shelters.user_id')->where('shelters.status','=', 1)
-            ->select('users.id as user_id','shelters.id as shelter_id','users.name as user_name','users.created_at as created','users.phone as user_phone','users.email as user_email','shelters.altitude as shelter_altitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','users.province as shelter_province','users.city as shelter_city')->skip(($request->input('currentPage')-1)*PaginationServiceProvider::limit)->take(PaginationServiceProvider::limit)->get();
+            ->select('users.id as user_id','shelters.id as shelter_id','users.name as user_name','users.created_at as created','users.phone as user_phone','users.email as user_email','shelters.altitude as shelter_longitude','shelters.latitude as shelter_latitude','shelters.address as shelter_address', 'shelters.description as description','shelters.schedule as shelter_schedule','users.province as shelter_province','users.city as shelter_city')->skip(($request->input('currentPage')-1)*PaginationServiceProvider::limit)->take(PaginationServiceProvider::limit)->get();
         return array(
             'error' => false,
             'code' => CodesServiceProvider::OK_CODE,
