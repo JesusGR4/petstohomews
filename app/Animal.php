@@ -6,9 +6,9 @@ use App\Providers\PaginationServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Image as Image_File;
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManagerStatic as Image_Manager;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+
 class Animal extends Model 
 {
 
@@ -19,12 +19,6 @@ class Animal extends Model
     {
         return $this->belongsTo('Shelter', 'shelter_id');
     }
-
-    public function hasManyImages()
-    {
-        return $this->hasMany('Image');
-    }
-
 
     public static function getAnimalsByShelterId($request){
         $animals = DB::table('animals')->where('shelter_id', '=', $request->input('shelter_id'))->get();
@@ -131,7 +125,7 @@ class Animal extends Model
                 mkdir($directory, 0777, true);
             }
             $path = $directory . '/' . $nameImage;
-            Image::make($imagefile->getRealPath())->save($path);
+            Image_Manager::make($imagefile->getRealPath())->save($path);
             //Image es una libreria, hay que instalarla con composer.phar.
             $image = new Image_File();
             $image->name = $nameImage;
