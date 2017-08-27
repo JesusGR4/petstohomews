@@ -16,12 +16,7 @@ use Illuminate\Http\Request;
 
 //Ruta insignificante, sirve para iniciar el deb
 Route::get('/home', function (Request $request) {
-    $shelters = \App\Shelter::all();
-    foreach($shelters as $shelter){
-
-        $count = $shelter->hasManyAnimals()->count();
-        dd($count);
-    }
+    return 'hol';
 });
 
 //Rutas para el usuario
