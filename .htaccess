@@ -22,6 +22,3 @@ Header always set Access-Control-Allow-Headers "cache-control, x-requested-with,
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
-
-
-
