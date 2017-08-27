@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\image;
+use App\Image;
 use Illuminate\Support\Facades\DB;
 class ImageTableSeeder extends Seeder {
 
